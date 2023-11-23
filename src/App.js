@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import phraseList from "./static/phrases.json";
-import PlayerGuess from "./GetPlayerGuess";
+import PlayerGuess from "./Components/GetPlayerGuess";
 
 export default function App() {
   const [randomPhrase, setRandomPhrase] = useState("");
@@ -19,10 +19,14 @@ export default function App() {
 
   return (
     <div className="App">
-      <p>{randomPhrase}</p>
-      <p>{displayedPhrase}</p>
-      <PlayerGuess />
-      <button onClick={handleClick}>Click Me</button>
+      <button onClick={handleClick}>START</button>
+      {randomPhrase && (
+        <div className="game-screen">
+          <p>{randomPhrase}</p>
+          <p>{displayedPhrase}</p>
+          <PlayerGuess />
+        </div>
+      )}
     </div>
   );
 }
