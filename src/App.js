@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import phraseList from "./static/phrases.json";
+import PlayerGuess from "./GetPlayerGuess";
 
 export default function App() {
-  const [randomPhrase, setRandomPhrase] = useState("Original phrase");
+  const [randomPhrase, setRandomPhrase] = useState("");
   const [displayedPhrase, setDisplayedPhrase] = useState("");
 
   useEffect(() => {
@@ -20,6 +21,7 @@ export default function App() {
     <div className="App">
       <p>{randomPhrase}</p>
       <p>{displayedPhrase}</p>
+      <PlayerGuess />
       <button onClick={handleClick}>Click Me</button>
     </div>
   );
