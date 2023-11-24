@@ -4,57 +4,102 @@ import phraseList from "./static/phrases.json";
 import PlayerGuess from "./Components/GetPlayerGuess";
 
 export default function App() {
+  const [gameStart, setGameStart] = useState(false);
   const [randomPhrase, setRandomPhrase] = useState("");
   const [displayedPhrase, setDisplayedPhrase] = useState("");
   const [submittedGuess, setSubmittedGuess] = useState("");
   const [previousGuesses, setPreviousGuesses] = useState([]);
   const [gameComplete, setGameCompletion] = useState(false);
+  const [feedback, setFeedback] = useState("");
+  const [message, setMessage] = useState("");
+  const [health, setHealth] = useState(5);
 
   useEffect(() => {
     setDisplayedPhrase(hideRandomPhrase(randomPhrase));
   }, [randomPhrase]);
 
+  // This function is run when the player clicks the start button
   const handleClick = () => {
+    setGameStart(true);
     const rdn = getRandomPhrase();
     setRandomPhrase(rdn);
+    console.log(rdn);
   };
 
+  const clearFeedback = () => {
+    setFeedback("");
+  };
+
+  // Function to handle guess submission
   const handleGuess = (guess) => {
     setSubmittedGuess(guess);
-    const updatedPhrase = updateDisplayedPhrase(
-      randomPhrase,
-      displayedPhrase,
-      guess
-    );
-    setDisplayedPhrase(updatedPhrase);
-    setPreviousGuesses([...previousGuesses, guess.toLowerCase()]);
 
-    // Check game completion
-    if (!updatedPhrase.includes("*")) {
-      setGameCompletion(true);
+    if (randomPhrase.toLowerCase().includes(guess.toLowerCase())) {
+      // Player guess is correct
+      setFeedback("Your guess is correct");
+      const updatedPhrase = updateDisplayedPhrase(
+        randomPhrase,
+        displayedPhrase,
+        guess
+      );
+
+      // If there's no more asterisk, the user has successfully guessed the phrase
+      if (!updatedPhrase.includes("*")) {
+        setGameCompletion(true);
+        setMessage(`You guessed the secret phrase!`);
+      }
+      setDisplayedPhrase(updatedPhrase);
+    } else {
+      // Player guess incorrectly
+      setFeedback("Your guess is not in the phrase");
+      setHealth(health - 1);
+
+      // If health is zero after state update, the game is over
+      if (health - 1 === 0) {
+        setGameCompletion(true);
+        setMessage(`GAME OVER. The phrase is: ${randomPhrase}`);
+      }
     }
+
+    setPreviousGuesses([...previousGuesses, guess.toLowerCase()]);
   };
 
   return (
     <div className="App">
-      <button onClick={handleClick} className="start-button">
-        START
-      </button>
-
-      {gameComplete ? (
-        <p>You guessed the secret phrase</p>
+      {!gameStart ? ( // If the game is has not started display START button
+        <button onClick={handleClick} className="start-button">
+          START
+        </button>
       ) : (
-        randomPhrase && (
-          <div className="game-screen">
-            <p>{randomPhrase}</p>
+        // Do this once the player pressed START
+        <div className="main-game-screen">
+          <div className="player-info">
             <p>{displayedPhrase}</p>
-            <PlayerGuess
-              onGuess={handleGuess}
-              previousGuesses={previousGuesses}
-            />
-            <p>Submitted guess: {submittedGuess}</p>
+            <p>health: {health}</p>
           </div>
-        )
+          <div className="game-div">
+            {gameComplete ? (
+              // The game is over, show result screen
+              <div className="game-result-div">
+                <p>{message}</p>
+                <button>Play again</button>
+              </div>
+            ) : (
+              // Game is not complete, keep playing
+              randomPhrase && (
+                <div className="player-guess-div">
+                  <PlayerGuess
+                    onGuess={handleGuess}
+                    previousGuesses={previousGuesses}
+                    clearFeedback={clearFeedback}
+                  />
+                  <p>Submitted guess: {submittedGuess}</p>
+                  <p>{feedback}</p>
+                </div>
+              )
+            )}
+          </div>
+        </div>
       )}
     </div>
   );
@@ -68,10 +113,6 @@ function getRandomPhrase() {
 
 function hideRandomPhrase(phrase) {
   return phrase.replace(/[a-zA-Z]/g, "*"); // Replaces phrase with *'s.
-}
-
-function isCharacterPresent(str, char) {
-  return str.includes(char);
 }
 
 function updateDisplayedPhrase(phrase, displayedPhrase, guess) {

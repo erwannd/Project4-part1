@@ -2,13 +2,19 @@ import React, { useEffect, useState } from "react";
 import GuessErrorModal from "./GuessErrorModal";
 import "../static/getPlayerGuess.css";
 
-export default function PlayerGuess({ onGuess, previousGuesses }) {
+export default function PlayerGuess({
+  onGuess,
+  previousGuesses,
+  clearFeedback,
+}) {
   const [input, setInput] = useState("");
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
+    clearFeedback();
+    clearError();
   };
 
   const handleInputSubmission = (event) => {
@@ -19,17 +25,19 @@ export default function PlayerGuess({ onGuess, previousGuesses }) {
     if (inputValidation !== true) {
       setIsError(true);
       setErrorMessage(inputValidation);
+      setInput("");
       return;
     }
 
     console.log(previousGuesses);
     console.log(`Input: ${input}`);
+    clearError(); // Clear error message when a valid input is submitted
     onGuess(input);
-    setIsError(false);
     setInput("");
   };
 
-  const closeErrorModal = () => {
+  // Function to clear error message
+  const clearError = () => {
     setIsError(false);
     setErrorMessage("");
   };
@@ -44,20 +52,14 @@ export default function PlayerGuess({ onGuess, previousGuesses }) {
           onChange={handleInputChange}
           className="guess-input"
         ></input>
-        <button type="submit" className="guess-button">
-          Guess
-        </button>
+      </form>
+      {previousGuesses.length > 0 && (
         <p className="previous-guesses">
           Previous guesses: {arrayToString(previousGuesses)}
         </p>
-      </form>
+      )}
       <div className="error-modal">
-        {isError && (
-          <GuessErrorModal
-            errorMessage={errorMessage}
-            onCloseError={closeErrorModal}
-          />
-        )}
+        {isError && <GuessErrorModal errorMessage={errorMessage} />}
       </div>
     </div>
   );
