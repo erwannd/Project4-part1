@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import phraseList from "./static/phrases.json";
 import PlayerGuess from "./Components/GetPlayerGuess";
+import WelcomeBanner from "./Components/WelcomeBanner";
+import { CSSTransition } from "react-transition-group";
 
 export default function App() {
   const [gameStart, setGameStart] = useState(false);
+  const [welcomeBanner, setWelcomeBanner] = useState(false);
   const [randomPhrase, setRandomPhrase] = useState("");
   const [displayedPhrase, setDisplayedPhrase] = useState("");
   const [submittedGuess, setSubmittedGuess] = useState("");
@@ -19,15 +22,12 @@ export default function App() {
   }, [randomPhrase]);
 
   // This function is run when the player clicks the start button
-  const handleClick = () => {
+  const handleStart = () => {
     setGameStart(true);
+    setWelcomeBanner(true);
     const rdn = getRandomPhrase();
     setRandomPhrase(rdn);
     console.log(rdn);
-  };
-
-  const clearFeedback = () => {
-    setFeedback("");
   };
 
   // Function to handle guess submission
@@ -67,17 +67,31 @@ export default function App() {
   return (
     <div className="App">
       {!gameStart ? ( // If the game is has not started display START button
-        <button onClick={handleClick} className="start-button">
+        <button onClick={handleStart} className="start-button">
           START
         </button>
       ) : (
-        // Do this once the player pressed START
+        // Do this after the player pressed START
         <div className="main-game-screen">
           <div className="player-info">
             <p>{displayedPhrase}</p>
             <p>health: {health}</p>
           </div>
           <div className="game-div">
+            <CSSTransition
+              in={welcomeBanner}
+              timeout={300}
+              classNames={{
+                enter: "welcome-banner-enter",
+                enterActive: "welcome-banner-enter-active",
+                exit: "welcome-banner-exit",
+                exitActive: "welcome-banner-exit-active",
+              }}
+              unmountOnExit
+            >
+              <WelcomeBanner onCloseWelcome={() => setWelcomeBanner(false)} />
+            </CSSTransition>
+
             {gameComplete ? (
               // The game is over, show result screen
               <div className="game-result-div">
@@ -91,7 +105,7 @@ export default function App() {
                   <PlayerGuess
                     onGuess={handleGuess}
                     previousGuesses={previousGuesses}
-                    clearFeedback={clearFeedback}
+                    clearFeedback={() => setFeedback("")}
                   />
                   <p>Submitted guess: {submittedGuess}</p>
                   <p>{feedback}</p>

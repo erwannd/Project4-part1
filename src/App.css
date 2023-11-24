@@ -24,9 +24,33 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 4px;
   background-color: #000; /* Set background color to black */
   color: #fff; /* Set text color to white */
   padding: 20px; /* Add padding for better readability */
+  position: relative; /* Make it a relative container for absolute positioning */
+}
+
+.welcome-banner-enter {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+.welcome-banner-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.welcome-banner-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.welcome-banner-exit-active {
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 300ms, transform 300ms;
 }
 
 .player-info {

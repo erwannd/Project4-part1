@@ -51,6 +51,7 @@ export default function PlayerGuess({
           placeholder="Guess a letter"
           onChange={handleInputChange}
           className="guess-input"
+          id="player-input"
         ></input>
       </form>
       {previousGuesses.length > 0 && (
