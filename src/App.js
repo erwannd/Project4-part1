@@ -6,6 +6,9 @@ import PlayerGuess from "./Components/GetPlayerGuess";
 export default function App() {
   const [randomPhrase, setRandomPhrase] = useState("");
   const [displayedPhrase, setDisplayedPhrase] = useState("");
+  const [submittedGuess, setSubmittedGuess] = useState("");
+  const [previousGuesses, setPreviousGuesses] = useState([]);
+  const [gameComplete, setGameCompletion] = useState(false);
 
   useEffect(() => {
     setDisplayedPhrase(hideRandomPhrase(randomPhrase));
@@ -13,19 +16,45 @@ export default function App() {
 
   const handleClick = () => {
     const rdn = getRandomPhrase();
-    console.log(rdn);
     setRandomPhrase(rdn);
+  };
+
+  const handleGuess = (guess) => {
+    setSubmittedGuess(guess);
+    const updatedPhrase = updateDisplayedPhrase(
+      randomPhrase,
+      displayedPhrase,
+      guess
+    );
+    setDisplayedPhrase(updatedPhrase);
+    setPreviousGuesses([...previousGuesses, guess.toLowerCase()]);
+
+    // Check game completion
+    if (!updatedPhrase.includes("*")) {
+      setGameCompletion(true);
+    }
   };
 
   return (
     <div className="App">
-      <button onClick={handleClick}>START</button>
-      {randomPhrase && (
-        <div className="game-screen">
-          <p>{randomPhrase}</p>
-          <p>{displayedPhrase}</p>
-          <PlayerGuess />
-        </div>
+      <button onClick={handleClick} className="start-button">
+        START
+      </button>
+
+      {gameComplete ? (
+        <p>You guessed the secret phrase</p>
+      ) : (
+        randomPhrase && (
+          <div className="game-screen">
+            <p>{randomPhrase}</p>
+            <p>{displayedPhrase}</p>
+            <PlayerGuess
+              onGuess={handleGuess}
+              previousGuesses={previousGuesses}
+            />
+            <p>Submitted guess: {submittedGuess}</p>
+          </div>
+        )
       )}
     </div>
   );
@@ -39,4 +68,21 @@ function getRandomPhrase() {
 
 function hideRandomPhrase(phrase) {
   return phrase.replace(/[a-zA-Z]/g, "*"); // Replaces phrase with *'s.
+}
+
+function isCharacterPresent(str, char) {
+  return str.includes(char);
+}
+
+function updateDisplayedPhrase(phrase, displayedPhrase, guess) {
+  const phraseArr = displayedPhrase.split("");
+  for (let index = 0; index < phrase.length; index++) {
+    if (phrase.toLowerCase()[index] === guess.toLowerCase()) {
+      phraseArr[index] = phrase[index];
+    }
+  }
+  const updatedHiddenPhrase = phraseArr.join("");
+  console.log(phraseArr);
+  console.log(updatedHiddenPhrase);
+  return updatedHiddenPhrase;
 }

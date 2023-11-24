@@ -1,32 +1,32 @@
 import React, { useEffect, useState } from "react";
 import GuessErrorModal from "./GuessErrorModal";
+import "../static/getPlayerGuess.css";
 
-export default function PlayerGuess() {
-  const [guess, setGuess] = useState("");
-  const [previousGuesses, setPreviousGuesses] = useState([]);
+export default function PlayerGuess({ onGuess, previousGuesses }) {
+  const [input, setInput] = useState("");
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleText = (e) => {
-    setGuess(e.target.value);
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
   };
 
-  const handleGuessSubmission = (event) => {
+  const handleInputSubmission = (event) => {
     event.preventDefault();
 
-    // Checks for guess validity
-    const guessCheck = isValidGuess(guess, previousGuesses);
-    if (guessCheck !== true) {
+    // Checks for input validity
+    const inputValidation = isValidInput(input, previousGuesses);
+    if (inputValidation !== true) {
       setIsError(true);
-      setErrorMessage(guessCheck);
+      setErrorMessage(inputValidation);
       return;
     }
 
-    setPreviousGuesses([...previousGuesses, guess.toLowerCase()]);
     console.log(previousGuesses);
-    console.log(`Guess: ${guess}`);
-    setGuess("");
+    console.log(`Input: ${input}`);
+    onGuess(input);
     setIsError(false);
+    setInput("");
   };
 
   const closeErrorModal = () => {
@@ -36,15 +36,20 @@ export default function PlayerGuess() {
 
   return (
     <div className="guess-area">
-      <form onSubmit={handleGuessSubmission}>
+      <form onSubmit={handleInputSubmission} className="guess-form">
         <input
           type="text"
-          value={guess}
+          value={input}
           placeholder="Guess a letter"
-          onChange={handleText}
+          onChange={handleInputChange}
+          className="guess-input"
         ></input>
-        <button type="submit">Guess</button>
-        <p>Previous guesses: {arrayToString(previousGuesses)}</p>
+        <button type="submit" className="guess-button">
+          Guess
+        </button>
+        <p className="previous-guesses">
+          Previous guesses: {arrayToString(previousGuesses)}
+        </p>
       </form>
       <div className="error-modal">
         {isError && (
@@ -62,7 +67,7 @@ function arrayToString(array) {
   return array.join(", ");
 }
 
-function isValidGuess(guess, previousGuesses) {
+function isValidInput(input, previousGuesses) {
   const isLetter = (g) => {
     return /^[a-zA-Z]$/.test(g); // Only single letters are allowed
   };
@@ -74,11 +79,11 @@ function isValidGuess(guess, previousGuesses) {
     }
   };
 
-  if (guess.length === 0) {
+  if (input.length === 0) {
     return "Invalid guess: Please guess a letter.";
-  } else if (!isLetter(guess)) {
+  } else if (!isLetter(input)) {
     return "Invalid guess: Please enter a single alphabetical character.";
-  } else if (isPreviouslyGuessed(guess, previousGuesses)) {
+  } else if (isPreviouslyGuessed(input, previousGuesses)) {
     return "Invalid guess: You have already guessed this letter.";
   } else {
     return true;
