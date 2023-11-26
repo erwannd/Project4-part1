@@ -3,15 +3,17 @@ import "./App.css";
 import phraseList from "./static/phrases.json";
 import PlayerGuess from "./Components/GetPlayerGuess";
 import WelcomeBanner from "./Components/WelcomeBanner";
-import Heart from "./Components/Heart";
-import { CSSTransition } from "react-transition-group";
 import Title from "./Components/TitleAnimation";
+import Heart from "./Components/Heart";
+import RecordViewer from "./Components/RecordViewer";
+import { CSSTransition } from "react-transition-group";
 
 // Sets a hidden letter into this character
 const HIDDEN = "_";
 
 export default function App() {
   const [gameStart, setGameStart] = useState(false);
+  const [scoreViewer, setScoreViewer] = useState(false);
   const [welcomeBanner, setWelcomeBanner] = useState(false);
   const [randomPhrase, setRandomPhrase] = useState("");
   const [displayedPhrase, setDisplayedPhrase] = useState("");
@@ -37,6 +39,10 @@ export default function App() {
     });
     const rdn = getRandomPhrase();
     setRandomPhrase(rdn);
+  };
+
+  const handleView = () => {
+    setScoreViewer(true);
   };
 
   // Function to handle guess submission
@@ -75,22 +81,28 @@ export default function App() {
     <div className="App">
       {/* Main screen is always on display */}
       <div className="main-game-screen">
-        {!gameStart ? ( // If the game is has not started display START button
-          <div className="game-opening">
-            <h1>
-              <Title text="Wheel of Fortune" />
-            </h1>
-            <button onClick={handleStart} className="start-button">
-              START
-            </button>
-          </div>
-        ) : (
-          <div className="player-info">
-            <p className="hidden-phrase">{displayedPhrase}</p>
-            <div className="hearts-container">
-              <Heart remainingLife={health} />
+        {!gameStart &&
+          !scoreViewer && ( // If the game is has not started and viewer is not active display button
+            <div className="game-opening">
+              <h1>
+                <Title text="Wheel of Fortune" />
+              </h1>
+              <div>
+                <button onClick={handleStart} className="start-button">
+                  START
+                </button>
+              </div>
+              <div>
+                <button onClick={handleView} className="view-button">
+                  HIGHSCORES
+                </button>
+              </div>
             </div>
-          </div>
+          )}
+
+        {/* Show score records when the viewer is set to true */}
+        {scoreViewer && (
+          <RecordViewer closeViewer={() => setScoreViewer(false)} />
         )}
 
         {/* Welcome banner is always on display */}
@@ -108,6 +120,16 @@ export default function App() {
           >
             <WelcomeBanner onCloseWelcome={() => setWelcomeBanner(false)} />
           </CSSTransition>
+
+          {/* On game start display player info and health */}
+          {gameStart && (
+            <div className="player-info">
+              <p className="hidden-phrase">{displayedPhrase}</p>
+              <div className="hearts-container">
+                <Heart remainingLife={health} />
+              </div>
+            </div>
+          )}
 
           {/* Checks for game completion */}
           {gameComplete ? (

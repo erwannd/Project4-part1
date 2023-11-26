@@ -1,0 +1,19 @@
+.record-viewer {
+  display: flex;
+}
+
+.records-list {
+  flex-grow: 1;
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+}
+
+.record {
+  background-color: #f0eaea;
+  padding: 5px;
+  margin: 5px 0;
+  border-radius: 5px;
+  width: 100%;
+  color: black;
+}
