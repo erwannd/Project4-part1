@@ -3,7 +3,6 @@ import "../static/titleAnimation.css";
 
 export default function Title({ text }) {
   const letters = text.split("");
-  console.log(letters);
 
   return (
     <div className="animated-text">
