@@ -1,0 +1,10 @@
+.heart-icon {
+  width: 40px;
+  height: 40px;
+  margin: 0 2px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.heart-icon.empty {
+  transform: scale(0);
+}

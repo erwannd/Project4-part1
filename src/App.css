@@ -1,5 +1,10 @@
+@font-face {
+  font-family: "Karmatic Arcade";
+  src: url("./static/fonts/ka1.ttf") format("truetype");
+}
+
 .App {
-  font-family: "Arial", sans-serif;
+  font-family: "Karmatic Arcade", sans-serif;
   text-align: center;
   padding: 20px;
 }
@@ -29,32 +34,37 @@
   color: #fff; /* Set text color to white */
   padding: 20px; /* Add padding for better readability */
   position: relative; /* Make it a relative container for absolute positioning */
+  height: 70vh;
+  transition: height 0.3 ease;
 }
 
-.welcome-banner-enter {
-  opacity: 0;
-  transform: translateY(-100%);
+.hidden-phrase {
+  font-family: "Karmatic Arcade";
+  font-size: 25px;
 }
 
-.welcome-banner-enter-active {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 300ms, transform 300ms;
-}
-
+.welcome-banner-enter,
 .welcome-banner-exit {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 0;
+  transform: translateY(-20px);
 }
 
+.welcome-banner-enter-active,
 .welcome-banner-exit-active {
-  opacity: 0;
-  transform: translateY(100%);
-  transition: opacity 300ms, transform 300ms;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 700ms, transform 400ms;
 }
 
 .player-info {
   margin-bottom: 20px;
+}
+
+.hearts-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  background-color: black;
 }
 
 .game-div {

@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Press2Start";
+  src: url("./fonts/PressStart2P-vaV7.ttf") format("truetype");
+}
+
 .guess-area {
   display: flex;
   flex-direction: column;
@@ -16,6 +21,7 @@
   font-size: 1em;
   padding: 10px;
   margin-bottom: 10px;
+  font-family: "Press2Start";
 }
 
 .guess-button {

@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Super Legend";
+  src: url(./fonts/SuperLegendBoy-4w8Y.ttf) format("truetype");
+}
+
 .welcome-banner-container {
   position: fixed;
   top: 0;
@@ -16,6 +21,8 @@
   border-radius: 20px;
   text-align: center;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  font-family: "Super Legend";
+  font-size: 20px;
 }
 
 .close-btn {
