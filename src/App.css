@@ -3,6 +3,16 @@
   src: url("./static/fonts/ka1.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "zerovelo";
+  src: url("./static/fonts/zerovelo.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Game Shark";
+  src: url("./static/fonts/gameShark.otf");
+}
+
 .App {
   font-family: "Karmatic Arcade", sans-serif;
   text-align: center;
@@ -36,6 +46,11 @@
   position: relative; /* Make it a relative container for absolute positioning */
   height: 70vh;
   transition: height 0.3 ease;
+}
+
+.game-opening > h1 {
+  font-family: "Game Shark";
+  font-size: 75px;
 }
 
 .hidden-phrase {

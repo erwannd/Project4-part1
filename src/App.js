@@ -5,6 +5,7 @@ import PlayerGuess from "./Components/GetPlayerGuess";
 import WelcomeBanner from "./Components/WelcomeBanner";
 import Heart from "./Components/Heart";
 import { CSSTransition } from "react-transition-group";
+import Title from "./Components/TitleAnimation";
 
 // Sets a hidden letter into this character
 const HIDDEN = "_";
@@ -14,7 +15,6 @@ export default function App() {
   const [welcomeBanner, setWelcomeBanner] = useState(false);
   const [randomPhrase, setRandomPhrase] = useState("");
   const [displayedPhrase, setDisplayedPhrase] = useState("");
-  const [submittedGuess, setSubmittedGuess] = useState("");
   const [previousGuesses, setPreviousGuesses] = useState([]);
   const [gameComplete, setGameCompletion] = useState(false);
   const [feedback, setFeedback] = useState("");
@@ -41,8 +41,6 @@ export default function App() {
 
   // Function to handle guess submission
   const handleGuess = (guess) => {
-    setSubmittedGuess(guess);
-
     if (randomPhrase.toLowerCase().includes(guess.toLowerCase())) {
       // Player guess is correct
       setFeedback("Your guess is correct");
@@ -78,9 +76,14 @@ export default function App() {
       {/* Main screen is always on display */}
       <div className="main-game-screen">
         {!gameStart ? ( // If the game is has not started display START button
-          <button onClick={handleStart} className="start-button">
-            START
-          </button>
+          <div className="game-opening">
+            <h1>
+              <Title text="Wheel of Fortune" />
+            </h1>
+            <button onClick={handleStart} className="start-button">
+              START
+            </button>
+          </div>
         ) : (
           <div className="player-info">
             <p className="hidden-phrase">{displayedPhrase}</p>

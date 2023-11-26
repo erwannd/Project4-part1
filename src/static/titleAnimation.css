@@ -1,0 +1,88 @@
+.animated-text {
+  display: inline-block;
+}
+
+/* Define colors for each letter */
+.animated-text span.color-1 {
+  color: #ff0000;
+}
+
+.animated-text span.color-2 {
+  color: #ff4500;
+}
+
+.animated-text span.color-3 {
+  color: #ff8c00;
+}
+
+.animated-text span.color-4 {
+  color: #ffd700;
+}
+
+.animated-text span.color-5 {
+  color: #ffff00;
+}
+
+.animated-text span.color-6 {
+  color: #adff2f;
+}
+
+.animated-text span.color-7 {
+  color: #00ff00;
+}
+
+.animated-text span.color-8 {
+  color: #00fa9a;
+}
+
+.animated-text span.color-9 {
+  color: #00bfff;
+}
+
+.animated-text span.color-10 {
+  color: #1e90ff;
+}
+
+.animated-text span.color-11 {
+  color: #7b68ee;
+}
+
+.animated-text span.color-12 {
+  color: #8a2be2;
+}
+
+.animated-text span.color-13 {
+  color: #9400d3;
+}
+
+.animated-text span.color-14 {
+  color: #8b008b;
+}
+
+.animated-text span.color-15 {
+  color: #ff1493;
+}
+
+.animated-text span.color-16 {
+  color: #ff69b4;
+}
+
+.animated-text span {
+  display: inline-block;
+  animation: changeColor 4.5s linear infinite;
+  margin-right: 0.05em;
+}
+
+.animated-text span.space {
+  margin-right: 0.0001em; /* Adjust spacing as needed */
+  visibility: hidden; /* Hide the space character visually */
+}
+
+@keyframes changeColor {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
