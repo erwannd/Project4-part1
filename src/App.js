@@ -24,33 +24,44 @@ export default function App() {
   const [randomPhrase, setRandomPhrase] = useState("");
   const [displayedPhrase, setDisplayedPhrase] = useState("");
   const [previousGuesses, setPreviousGuesses] = useState([]);
+  const [gameInProgress, setGameInProgress] = useState(false);
   const [gameComplete, setGameCompletion] = useState(false);
   const [feedback, setFeedback] = useState("");
   const [message, setMessage] = useState("");
   const [health, setHealth] = useState(STARTING_HEALTH);
 
   useEffect(() => {
-    setDisplayedPhrase(hideRandomPhrase(randomPhrase));
-  }, [randomPhrase]);
+    if (gameInProgress) {
+      setDisplayedPhrase(hideRandomPhrase(randomPhrase));
+    }
+  }, [randomPhrase, gameInProgress]);
 
   // This is run when the player clicks the start button
   const handleStart = () => {
     // Set showBanner to true first
     setGameCompletion(false);
+    setPreviousGuesses([]);
     setScore(0);
     setHealth(STARTING_HEALTH);
-    setPreviousGuesses([]);
     setWelcomeBanner(true);
 
     // Simulate asynchronous setup logic
     Promise.resolve().then(() => {
       // Finally, set gameStart to true
       setGameStart(true);
+      setGameInProgress(true);
     });
     const rdn = getRandomPhrase();
     setRandomPhrase(rdn);
     setMessage("");
     setFeedback("");
+  };
+
+  const handleBackToMainMenu = () => {
+    setGameStart(false);
+    setGameCompletion(false);
+    setGameInProgress(false);
+    setWelcomeBanner(false);
   };
 
   // This is run when player clicks on highscore button
@@ -175,9 +186,7 @@ export default function App() {
                     clearFeedback={() => setFeedback("")}
                   />
                   <p>{feedback}</p>
-                  <button onClick={() => setGameStart(false)}>
-                    Back to menu
-                  </button>
+                  <button onClick={handleBackToMainMenu}>Back to menu</button>
                 </div>
               )}
             </div>
