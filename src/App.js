@@ -17,7 +17,6 @@ const STARTING_HEALTH = 5;
 
 export default function App() {
   const [user, setUser] = useState("");
-  const [userId, setUserId] = useState("");
   const [gameStart, setGameStart] = useState(false);
   const [score, setScore] = useState(0);
   const [scoreViewer, setScoreViewer] = useState(false);
@@ -68,11 +67,6 @@ export default function App() {
   // this will be called by the LoginForm
   function handleLogin(user) {
     setUser(user);
-    if (user) {
-      setUserId(user.uid);
-    } else {
-      setUserId(null);
-    }
   }
 
   // Function to handle guess submission
@@ -195,7 +189,11 @@ export default function App() {
             <div className="game-result-div">
               <p className="result-message">{message}</p>
               {console.log(message)}
-              <ScoreSubmission score={score} onExit={handleExitSubmission} />
+              <ScoreSubmission
+                player={user}
+                score={score}
+                onExit={handleExitSubmission}
+              />
               <button>Play again</button>
             </div>
           )}
