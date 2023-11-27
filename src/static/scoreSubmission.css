@@ -1,0 +1,9 @@
+@font-face {
+  font-family: "Start2P";
+  src: url("../static/fonts/PressStart2P-vaV7.ttf");
+}
+
+.record-submission {
+  font-family: "Start2P";
+  font-size: 15px;
+}

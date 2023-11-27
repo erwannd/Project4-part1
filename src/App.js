@@ -8,6 +8,7 @@ import Heart from "./Components/Heart";
 import RecordViewer from "./Components/RecordViewer";
 import { CSSTransition } from "react-transition-group";
 import LoginForm from "./Components/LoginForm";
+import ScoreSubmission from "./Components/ScoreSubmission";
 
 // Sets a hidden letter into this character
 const HIDDEN = "_";
@@ -36,6 +37,7 @@ export default function App() {
   // This is run when the player clicks the start button
   const handleStart = () => {
     // Set showBanner to true first
+    setGameCompletion(false);
     setScore(0);
     setHealth(STARTING_HEALTH);
     setPreviousGuesses([]);
@@ -55,6 +57,12 @@ export default function App() {
   // This is run when player clicks on highscore button
   const handleView = () => {
     setScoreViewer(true);
+  };
+
+  const handleExitSubmission = () => {
+    setGameStart(false);
+    setGameCompletion(false);
+    setMessage("");
   };
 
   // this will be called by the LoginForm
@@ -187,6 +195,7 @@ export default function App() {
             <div className="game-result-div">
               <p className="result-message">{message}</p>
               {console.log(message)}
+              <ScoreSubmission score={score} onExit={handleExitSubmission} />
               <button>Play again</button>
             </div>
           )}
