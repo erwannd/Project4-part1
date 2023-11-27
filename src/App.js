@@ -11,11 +11,14 @@ import LoginForm from "./Components/LoginForm";
 
 // Sets a hidden letter into this character
 const HIDDEN = "_";
+// Maximum number of misses
+const STARTING_HEALTH = 5;
 
 export default function App() {
   const [user, setUser] = useState("");
   const [userId, setUserId] = useState("");
   const [gameStart, setGameStart] = useState(false);
+  const [score, setScore] = useState(0);
   const [scoreViewer, setScoreViewer] = useState(false);
   const [welcomeBanner, setWelcomeBanner] = useState(false);
   const [randomPhrase, setRandomPhrase] = useState("");
@@ -24,7 +27,7 @@ export default function App() {
   const [gameComplete, setGameCompletion] = useState(false);
   const [feedback, setFeedback] = useState("");
   const [message, setMessage] = useState("");
-  const [health, setHealth] = useState(5);
+  const [health, setHealth] = useState(STARTING_HEALTH);
 
   useEffect(() => {
     setDisplayedPhrase(hideRandomPhrase(randomPhrase));
@@ -33,6 +36,9 @@ export default function App() {
   // This is run when the player clicks the start button
   const handleStart = () => {
     // Set showBanner to true first
+    setScore(0);
+    setHealth(STARTING_HEALTH);
+    setPreviousGuesses([]);
     setWelcomeBanner(true);
 
     // Simulate asynchronous setup logic
@@ -42,6 +48,8 @@ export default function App() {
     });
     const rdn = getRandomPhrase();
     setRandomPhrase(rdn);
+    setMessage("");
+    setFeedback("");
   };
 
   // This is run when player clicks on highscore button
@@ -64,6 +72,7 @@ export default function App() {
     if (randomPhrase.toLowerCase().includes(guess.toLowerCase())) {
       // Player guess is correct
       setFeedback("Your guess is correct");
+      setScore(score + 1);
       const updatedPhrase = updateDisplayedPhrase(
         randomPhrase,
         displayedPhrase,
@@ -74,6 +83,7 @@ export default function App() {
       if (!updatedPhrase.includes(HIDDEN)) {
         setGameCompletion(true);
         setMessage(`You guessed the secret phrase!`);
+        setScore(score + health * 5);
       }
       setDisplayedPhrase(updatedPhrase);
     } else {
@@ -151,6 +161,7 @@ export default function App() {
                 <div className="hearts-container">
                   <Heart remainingLife={health} />
                 </div>
+                <div className="score">Score: {score}</div>
               </div>
 
               {/* Game is not complete, keep playing */}
@@ -174,7 +185,7 @@ export default function App() {
           {gameComplete && (
             // The game is over, show result screen
             <div className="game-result-div">
-              <p>{message}</p>
+              <p className="result-message">{message}</p>
               {console.log(message)}
               <button>Play again</button>
             </div>
