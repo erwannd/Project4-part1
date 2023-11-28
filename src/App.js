@@ -72,6 +72,7 @@ export default function App() {
   const handleExitSubmission = () => {
     setGameStart(false);
     setGameCompletion(false);
+    setGameInProgress(false);
     setMessage("");
   };
 

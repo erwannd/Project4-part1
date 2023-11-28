@@ -3,6 +3,8 @@ import axios from "axios";
 import "../static/scoreSubmission.css";
 
 export default function ScoreSubmission({ player, score, onExit }) {
+  const [playerName, setPlayerName] = useState("");
+
   // function to handle the user submit of a new book
   // async used so we can use the "await", which causes a block until post is done
   async function handleSubmission(event) {
@@ -10,7 +12,7 @@ export default function ScoreSubmission({ player, score, onExit }) {
     const postData = {
       player: {
         userId: player.uid,
-        name: player.displayName,
+        name: playerName,
       },
       score: score,
     };
@@ -36,9 +38,16 @@ export default function ScoreSubmission({ player, score, onExit }) {
 
   return (
     <div className="record-submission">
-      <p>Would you like to be added to the leaderboard?</p>
-      <button onClick={handleSubmission}>Yes</button>
-      <button onClick={handleNoSubmission}>No</button>
+      <form>
+        <p>Would you like to be added to the leaderboard?</p>
+        <input
+          type="text"
+          value={playerName}
+          onChange={(e) => setPlayerName(e.target.value)}
+        ></input>
+        <button onClick={handleSubmission}>Yes</button>
+        <button onClick={handleNoSubmission}>No</button>
+      </form>
     </div>
   );
 }
