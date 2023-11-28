@@ -148,7 +148,10 @@ export default function App() {
 
         {/* Show score records when the viewer is set to true */}
         {scoreViewer && (
-          <RecordViewer closeViewer={() => setScoreViewer(false)} />
+          <RecordViewer
+            playerId={user.uid}
+            closeViewer={() => setScoreViewer(false)}
+          />
         )}
 
         {/* Welcome banner is always on display */}
