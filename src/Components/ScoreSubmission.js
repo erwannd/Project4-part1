@@ -9,19 +9,21 @@ export default function ScoreSubmission({ player, score, onExit }) {
   // async used so we can use the "await", which causes a block until post is done
   async function handleSubmission(event) {
     event.preventDefault();
-    const postData = {
-      player: {
-        userId: player.uid,
-        name: playerName,
+
+    const data = {
+      record: {
+        googleId: player.uid,
+        score: score,
       },
-      score: score,
+      name: playerName,
     };
+
     console.log(`Submitted your score: ${score}`);
 
     try {
       const response = await axios.post(
         "https://wheelofortune.wl.r.appspot.com/saveGame",
-        postData
+        data
       );
       console.log("Response:", response.data);
     } catch (error) {

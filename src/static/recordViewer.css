@@ -1,19 +1,32 @@
+@font-face {
+  font-family: "Start2P";
+  src: url("./fonts/PressStart2P-vaV7.ttf");
+}
+
 .record-viewer {
-  display: flex;
 }
 
 .records-list {
-  flex-grow: 1;
   display: flex;
   padding: 10px;
   flex-direction: column;
 }
 
 .record {
-  background-color: #f0eaea;
   padding: 5px;
   margin: 5px 0;
   border-radius: 5px;
   width: 100%;
-  color: black;
+  color: white;
+  font-family: "Start2P";
+  font-size: 13px;
+  /* color: black; */
+  /* background-color: #f0eaea; */
+}
+
+.back-to-game {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 20px;
+  margin-left: 20px;
 }

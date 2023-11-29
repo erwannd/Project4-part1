@@ -20,7 +20,7 @@ export default function RecordViewer({ playerId, closeViewer }) {
   // Function to fetch all records in DB
   function displayAllRecords() {
     axios
-      .get(`https://wheelofortune.wl.r.appspot.com/findAllRecords`)
+      .get(`https://wheelofortune.wl.r.appspot.com/findAllCombinedRecords`)
       .then((response) => {
         setGameRecords(response.data);
         setLoading(false);
@@ -34,7 +34,9 @@ export default function RecordViewer({ playerId, closeViewer }) {
   // Function to fetch user-specific records
   function displayUserSpecificRecords(usrId) {
     axios
-      .get(`https://wheelofortune.wl.r.appspot.com/findById?userId=${usrId}`)
+      .get(
+        `https://wheelofortune.wl.r.appspot.com/findCombinedRecordsById?userId=${usrId}`
+      )
       .then((response) => {
         setGameRecords(response.data);
         setLoading(false);
@@ -64,9 +66,6 @@ export default function RecordViewer({ playerId, closeViewer }) {
 
   return (
     <div className="record-viewer">
-      <div className="back-to-game">
-        <button onClick={closeViewer}>back</button>
-      </div>
       <div className="view-options">
         <button onClick={() => setQueryType("all")}>All Records</button>
         <button onClick={() => setQueryType("user-specific")}>
@@ -74,16 +73,23 @@ export default function RecordViewer({ playerId, closeViewer }) {
         </button>
       </div>
       <div className="records-list">
-        {gameRecords.map((record) => (
-          <div key={record.id} className="record">
-            recordId: {record.id}, playerId: {record.player.userId},{" "}
-            {record.player.name}, score:
-            {record.score}
-            {record.player.userId === playerId && (
-              <button onClick={() => handleDelete(record.id)}>Delete</button>
+        {gameRecords.map((combinedRecord) => (
+          <div key={combinedRecord.record.id} className="record">
+            playerId: {combinedRecord.record.googleId}, name:{" "}
+            {combinedRecord.name}, score: {combinedRecord.record.score}, date:{" "}
+            {combinedRecord.record.playDate}
+            {combinedRecord.record.googleId === playerId && (
+              <button onClick={() => handleDelete(combinedRecord.record.id)}>
+                Delete
+              </button>
             )}
           </div>
         ))}
+      </div>
+      <div className="back-to-game">
+        <button onClick={closeViewer} className="return-btn">
+          back
+        </button>
       </div>
     </div>
   );

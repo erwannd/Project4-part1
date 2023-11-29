@@ -29,8 +29,6 @@ export default function PlayerGuess({
       return;
     }
 
-    console.log(previousGuesses);
-    console.log(`Input: ${input}`);
     clearError(); // Clear error message when a valid input is submitted
     onGuess(input);
     setInput("");
