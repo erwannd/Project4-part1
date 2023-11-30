@@ -15,7 +15,7 @@
 .query-mode {
   position: fixed;
   top: 12.2%;
-  left: 3.1%;
+  left: 3.2%;
   size: 50px;
 }
 
@@ -47,6 +47,18 @@
   padding: 10px; /* Example padding */
 }
 
+.sort-options {
+  display: flex;
+  justify-content: flex-end; /* Align to the right */
+  margin-bottom: 20px; /* Add some margin to separate from records-list */
+}
+
+.sort-options label,
+.sort-options select {
+  color: black;
+  margin-right: 10px; /* Add some spacing between label and select elements */
+}
+
 .record {
   padding: 5px;
   margin-top: 5px;
@@ -61,13 +73,13 @@
 }
 
 .record:first-child {
-  margin-top: 45px;
+  margin-top: 60px;
 }
 
 .back-to-game {
   position: fixed; /* or 'absolute' based on your preference */
-  bottom: 80px; /*Adjust the distance from the bottom as needed */
-  left: 7%; /* Center horizontally */
+  bottom: 10%; /*Adjust the distance from the bottom as needed */
+  left: 6%; /* Center horizontally */
   transform: translateX(-50%); /* Center horizontally */
 }
 
@@ -89,7 +101,7 @@
 
 .page-navi {
   position: fixed; /* or 'absolute' based on your preference */
-  bottom: 100px; /* Adjust the distance from the bottom as needed */
+  bottom: 10%; /* Adjust the distance from the bottom as needed */
   left: 50%; /* Center horizontally */
   transform: translateX(-50%); /* Center horizontally */
 }

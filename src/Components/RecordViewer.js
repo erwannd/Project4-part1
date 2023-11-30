@@ -12,12 +12,13 @@ export default function RecordViewer({ playerId, closeViewer }) {
   const [error, setError] = useState(null);
   const [queryType, setQueryType] = useState("all");
   const [activeMode, setActiveMode] = useState("all");
+  const [sortField, setSortField] = useState("score");
+  const [sortDirection, setSortDirection] = useState("asc");
 
   // useEffect makes it so list of scores shown when this component mounts
   useEffect(() => {
-    console.log("useEffect 3 dependencies trigger");
     displayRecords();
-  }, [queryType, page, size]);
+  }, [queryType, page, size, sortField, sortDirection]);
 
   function displayRecords() {
     if (queryType === "all") {
@@ -31,7 +32,7 @@ export default function RecordViewer({ playerId, closeViewer }) {
   function displayAllRecords() {
     axios
       .get(
-        `https://wheelofortune.wl.r.appspot.com/findAllRecordsByPage?page=${page}&size=${size}`
+        `https://wheelofortune.wl.r.appspot.com/findAllRecordsByPage?page=${page}&size=${size}&sortField=${sortField}&sortDirection=${sortDirection}`
       )
       .then((response) => {
         setGameRecords(response.data.content);
@@ -48,7 +49,7 @@ export default function RecordViewer({ playerId, closeViewer }) {
   function displayUserSpecificRecords(usrId) {
     axios
       .get(
-        `https://wheelofortune.wl.r.appspot.com/findByIdByPage?userId=${usrId}&page=${page}&size=${size}`
+        `https://wheelofortune.wl.r.appspot.com/findByIdByPage?userId=${usrId}&page=${page}&size=${size}&sortField=${sortField}&sortDirection=${sortDirection}`
       )
       .then((response) => {
         setGameRecords(response.data.content);
@@ -83,6 +84,14 @@ export default function RecordViewer({ playerId, closeViewer }) {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
+  const handleSortFieldChange = (e) => {
+    setSortField(e.target.value);
+  };
+
+  const handleSortDirectionChange = (e) => {
+    setSortDirection(e.target.value);
+  };
+
   return (
     <div className="record-viewer">
       <div className="query-mode">
@@ -110,6 +119,26 @@ export default function RecordViewer({ playerId, closeViewer }) {
         </button>
       </div>
       <div className="records-list">
+        <div className="sort-options">
+          <label htmlFor="sort-field-selection">Sort by </label>
+          <select
+            id="sort-field-selection"
+            value={sortField}
+            onChange={handleSortFieldChange}
+          >
+            <option value="score">score</option>
+            <option value="playDate">date</option>
+          </select>
+          <label htmlFor="sort-direction-selection">Order </label>
+          <select
+            id="sort-direction-selection"
+            value={sortDirection}
+            onChange={handleSortDirectionChange}
+          >
+            <option value="asc">ascending</option>
+            <option value="desc">descending</option>
+          </select>
+        </div>
         {gameRecords.map((record) => (
           <div key={record.id} className="record">
             playerId: {record.googleId}, score: {record.score}, date:{" "}
