@@ -1,0 +1,53 @@
+Assuming this is my current render, can you make the guess area and in-game menu bigger? They are contained in
+a small container when I use inspect in the web. Is this because of the flex? Can you make the in-game-menu 
+container bigger? But I still want the guess area to be in the middle. Please help
+<div className="main-display">
+  <div className="game-div">
+    {gameStart && (
+      <div className="game-screen">
+        {!gameComplete && randomPhrase && (
+          <div className="in-game-menu">
+            <div className="guess-area">
+              <PlayerGuess
+                onGuess={handleGuess}
+                previousGuesses={previousGuesses}
+                clearFeedback={() => setFeedback("")}
+              />
+              <p>{feedback}</p>
+            </div>
+            <button onClick={handleBackToMainMenu}>Back to menu</button>
+          </div>
+        )}
+      </div>
+    )}
+  </div>
+</div>
+
+Here's the relevant part of my CSS
+.main-display {
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  background-color: #000; /* Set background color to black */
+  color: #fff; /* Set text color to white */
+  padding: 20px; /* Add padding for better readability */
+  height: 85vh;
+  transition: height 0.3 ease;
+}
+
+.game-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.in-game-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align the in-game-menu content to the start (left) */
+}
+
+.guess-area {
+  margin-top: 20px;
+  align-self: center;
+}
