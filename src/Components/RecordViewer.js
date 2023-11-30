@@ -12,24 +12,35 @@ export default function RecordViewer({ playerId, closeViewer }) {
   const [error, setError] = useState(null);
   const [queryType, setQueryType] = useState("all");
 
-  // useEffect makes it so list of scores shown when this component mounts
-  useEffect(() => {
-    console.log("useEffect 3 dependencies trigger");
-    if (queryType === "all") {
-      displayAllRecords();
-    } else if (queryType === "user-specific") {
-      displayUserSpecificRecords(playerId);
-    }
-  }, [queryType, page, size]);
-
+  // This effect runs when queryType changes and sets page & active page to 0
   useEffect(() => {
     console.log("useEffect setPage triggers");
     setPage(0);
     setActivePage(0);
   }, [queryType]);
 
+  // This effect runs when queryType changes. It fetches data based on the new queryType
+  useEffect(() => {
+    if (queryType === "all") {
+      displayAllRecords(page, size);
+    } else if (queryType === "user-specific") {
+      displayUserSpecificRecords(playerId, page, size);
+    }
+  }, [queryType]);
+
+  // useEffect makes it so list of scores shown when this component mounts
+  useEffect(() => {
+    console.log("useEffect 3 dependencies trigger");
+
+    if (queryType === "all") {
+      displayAllRecords(page, size);
+    } else if (queryType === "user-specific") {
+      displayUserSpecificRecords(playerId, page, size);
+    }
+  }, [page, size]);
+
   // Function to fetch all records in DB
-  function displayAllRecords() {
+  function displayAllRecords(page, size) {
     axios
       .get(
         `https://wheelofortune.wl.r.appspot.com/findAllRecordsByPage?page=${page}&size=${size}`
@@ -46,7 +57,7 @@ export default function RecordViewer({ playerId, closeViewer }) {
   }
 
   // Function to fetch user-specific records
-  function displayUserSpecificRecords(usrId) {
+  function displayUserSpecificRecords(usrId, page, size) {
     axios
       .get(
         `https://wheelofortune.wl.r.appspot.com/findByIdByPage?userId=${usrId}&page=${page}&size=${size}`
@@ -69,7 +80,7 @@ export default function RecordViewer({ playerId, closeViewer }) {
       )
       .then(() => {
         if (queryType === "all") {
-          displayAllRecords();
+          displayAllRecords(page, size);
         } else if (queryType === "user-specific") {
           displayUserSpecificRecords(playerId);
         }
@@ -114,7 +125,6 @@ export default function RecordViewer({ playerId, closeViewer }) {
             className={`page-number ${index === activePage ? "active" : ""}`}
             key={index}
             onClick={() => {
-              console.log("Updating page");
               setPage(index);
               setActivePage(index);
             }}
