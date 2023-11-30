@@ -16,7 +16,7 @@ const firebaseConfig = {
 // Initialize Firebase
 initializeApp(firebaseConfig);
 
-function LoginForm({ loginEvent }) {
+function LoginForm({ username, loginEvent }) {
   const [loggedUser, setLoggedUser] = useState(null);
 
   // Sign in with Google
@@ -64,8 +64,11 @@ function LoginForm({ loginEvent }) {
     <div className="sign-in-area">
       {loggedUser ? (
         <div className="user-info">
-          <p>Logged in as {loggedUser.displayName}</p>
-          <p>id: {loggedUser.uid}</p>{" "}
+          {username !== null ? (
+            <p>Welcome back, {username}</p>
+          ) : (
+            <p>Hello newcomer</p>
+          )}
           <button className="logout-button" onClick={logoutGoogle}>
             Log out
           </button>{" "}

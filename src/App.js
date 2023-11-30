@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./App.css";
 import phraseList from "./static/phrases.json";
 import PlayerGuess from "./Components/GetPlayerGuess";
@@ -11,6 +12,8 @@ import LoginForm from "./Components/LoginForm";
 import ScoreSubmission from "./Components/ScoreSubmission";
 import backBtn from "./static/images/back-btn.png";
 import backBtnFocus from "./static/images/back-btn-focus.png";
+import startBtn from "./static/images/start-btn.png";
+import scoreBtn from "./static/images/score-btn.png";
 
 // Sets a hidden letter into this character
 const HIDDEN = "_";
@@ -23,6 +26,7 @@ export default function App() {
   const [score, setScore] = useState(0);
   const [scoreViewer, setScoreViewer] = useState(false);
   const [welcomeBanner, setWelcomeBanner] = useState(false);
+  const [playerName, setPlayerName] = useState(null);
   const [randomPhrase, setRandomPhrase] = useState("");
   const [displayedPhrase, setDisplayedPhrase] = useState("");
   const [previousGuesses, setPreviousGuesses] = useState([]);
@@ -81,6 +85,18 @@ export default function App() {
   // this will be called by the LoginForm
   function handleLogin(user) {
     setUser(user);
+    axios
+      .get(
+        `https://wheelofortune.wl.r.appspot.com/findNameById?googleId=${user.uid}`
+      )
+      .then((response) => {
+        if (response.data !== null) {
+          setPlayerName(response.data[0].name);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   // Function to handle guess submission
@@ -127,21 +143,21 @@ export default function App() {
                 <Title text="Wheel of Fortune" />
               </h1>
               <div>
-                <LoginForm loginEvent={handleLogin} />
+                <LoginForm username={playerName} loginEvent={handleLogin} />
               </div>
               {/* Only show start and highscores button if the user is logged in. */}
               {user && (
-                <div>
-                  <div>
-                    <button onClick={handleStart} className="start-button">
-                      START
-                    </button>
-                  </div>
-                  <div>
-                    <button onClick={handleView} className="view-button">
-                      HIGHSCORES
-                    </button>
-                  </div>
+                <div className="menu-options">
+                  <img
+                    src={startBtn}
+                    onClick={handleStart}
+                    className="start-btn"
+                  ></img>
+                  <img
+                    src={scoreBtn}
+                    onClick={handleView}
+                    className="score-btn"
+                  ></img>
                 </div>
               )}
             </div>
@@ -211,6 +227,7 @@ export default function App() {
               {console.log(message)}
               <ScoreSubmission
                 player={user}
+                username={playerName}
                 score={score}
                 onExit={handleExitSubmission}
               />

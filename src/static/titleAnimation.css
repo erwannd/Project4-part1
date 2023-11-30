@@ -1,5 +1,12 @@
+@font-face {
+  font-family: "zerovelo";
+  src: url("./fonts/zerovelo.ttf") format("truetype");
+}
+
 .animated-text {
   display: inline-block;
+  font-family: "zerovelo";
+  font-size: 60px;
 }
 
 /* Define colors for each letter */
