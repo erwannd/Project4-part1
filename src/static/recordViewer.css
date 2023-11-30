@@ -76,13 +76,6 @@
   margin-top: 60px;
 }
 
-.back-to-game {
-  position: fixed; /* or 'absolute' based on your preference */
-  bottom: 10%; /*Adjust the distance from the bottom as needed */
-  left: 6%; /* Center horizontally */
-  transform: translateX(-50%); /* Center horizontally */
-}
-
 .page-number {
   width: 22px;
   height: 22px;

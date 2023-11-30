@@ -54,7 +54,7 @@
   background-color: #a40c8d;
 }
 
-.main-game-screen {
+.main-display {
   display: flex;
   flex-direction: column;
   border-radius: 4px;
@@ -98,13 +98,11 @@
   transition: opacity 700ms, transform 400ms;
 }
 
-.player-info {
-  margin-bottom: 40px;
+.player-status {
+  margin-bottom: 30px;
 }
 
 .hearts-container {
-  display: flex;
-  justify-content: center;
   margin-bottom: 20px;
   background-color: black;
   padding-bottom: 20px;
@@ -116,7 +114,7 @@
   align-items: center;
 }
 
-.player-guess-div {
+.guess-area {
   margin-top: 20px;
 }
 
@@ -124,4 +122,23 @@
   font-family: "Start2P";
   font-size: 15px;
   padding-bottom: 20px;
+}
+
+.answer-feedback {
+  font-family: "Start2P";
+  font-size: 10px;
+}
+
+.back-btn {
+  position: fixed;
+  bottom: 10%;
+  left: 4%;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  transition: transform 0.3 ease;
+}
+
+.back-btn:hover {
+  transform: scale(1.3);
 }

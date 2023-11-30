@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Start2P";
+  src: url("./fonts/PressStart2P-vaV7.ttf");
+}
+
 .error-modal-content {
   display: flex;
   flex-direction: column;
@@ -5,22 +10,12 @@
   padding: 20px;
   border: 1px solid #e74c3c;
   background-color: #f9ebec;
-}
-
-.close-button {
-  font-size: 1em;
-  padding: 5px 10px;
-  background-color: #e74c3c;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-.close-button:hover {
-  background-color: #b51b1b;
+  border-radius: 10px;
 }
 
 .error-message {
   margin-top: 10px;
   color: #e74c3c;
+  font-family: "Start2P";
+  font-size: 10px;
 }

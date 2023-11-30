@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../static/recordViewer.css";
+import backBtn from "../static/images/back-btn.png";
+import backBtnFocus from "../static/images/back-btn-focus.png";
 
 export default function RecordViewer({ playerId, closeViewer }) {
   const [page, setPage] = useState(0);
@@ -166,11 +168,13 @@ export default function RecordViewer({ playerId, closeViewer }) {
         ))}
       </div>
 
-      <div className="back-to-game">
-        <button onClick={closeViewer} className="return-btn">
-          back
-        </button>
-      </div>
+      <img
+        src={backBtn}
+        className="back-btn"
+        onClick={closeViewer}
+        onMouseOver={(e) => (e.target.src = backBtnFocus)}
+        onMouseOut={(e) => (e.target.src = backBtn)}
+      ></img>
     </div>
   );
 }

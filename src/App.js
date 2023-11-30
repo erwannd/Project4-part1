@@ -9,6 +9,8 @@ import RecordViewer from "./Components/RecordViewer";
 import { CSSTransition } from "react-transition-group";
 import LoginForm from "./Components/LoginForm";
 import ScoreSubmission from "./Components/ScoreSubmission";
+import backBtn from "./static/images/back-btn.png";
+import backBtnFocus from "./static/images/back-btn-focus.png";
 
 // Sets a hidden letter into this character
 const HIDDEN = "_";
@@ -85,7 +87,6 @@ export default function App() {
   const handleGuess = (guess) => {
     if (randomPhrase.toLowerCase().includes(guess.toLowerCase())) {
       // Player guess is correct
-      setFeedback("Your guess is correct");
       setScore(score + 1);
       const updatedPhrase = updateDisplayedPhrase(
         randomPhrase,
@@ -118,7 +119,7 @@ export default function App() {
   return (
     <div className="App">
       {/* Main screen is always on display */}
-      <div className="main-game-screen">
+      <div className="main-display">
         {!gameStart &&
           !scoreViewer && ( // If the game is has not started and viewer is not active display button
             <div className="game-opening">
@@ -173,7 +174,7 @@ export default function App() {
           {/* On game start display player info and health */}
           {gameStart && (
             <div>
-              <div className="player-info">
+              <div className="player-status">
                 <p className="hidden-phrase">{displayedPhrase}</p>
                 <div className="hearts-container">
                   <Heart remainingLife={health} />
@@ -183,14 +184,20 @@ export default function App() {
 
               {/* Game is not complete, keep playing */}
               {!gameComplete && randomPhrase && (
-                <div className="player-guess-div">
+                <div className="guess-area">
                   <PlayerGuess
                     onGuess={handleGuess}
                     previousGuesses={previousGuesses}
                     clearFeedback={() => setFeedback("")}
                   />
-                  <p>{feedback}</p>
-                  <button onClick={handleBackToMainMenu}>Back to menu</button>
+                  <p className="answer-feedback">{feedback}</p>
+                  <img
+                    src={backBtn}
+                    className="back-btn"
+                    onClick={handleBackToMainMenu}
+                    onMouseOver={(e) => (e.target.src = backBtnFocus)}
+                    onMouseOut={(e) => (e.target.src = backBtn)}
+                  ></img>
                 </div>
               )}
             </div>
