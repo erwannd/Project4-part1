@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../static/scoreSubmission.css";
 
-export default function ScoreSubmission({ player, score, onExit }) {
-  const [playerName, setPlayerName] = useState("");
+export default function ScoreSubmission({ player, username, score, onExit }) {
+  const [playerName, setPlayerName] = useState(username);
 
   // function to handle the user submit of a new book
   // async used so we can use the "await", which causes a block until post is done

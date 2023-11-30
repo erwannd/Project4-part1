@@ -24,12 +24,13 @@
 }
 
 .active-mode {
-  background-color: rgba(182, 184, 184, 0.783);
+  background-color: rgba(63, 193, 193, 0.783);
   cursor: default;
   pointer-events: none;
   font-weight: bold;
   border-radius: 3px;
-  border-bottom: rgba(182, 184, 184, 0.783);
+  border-color: rgba(6, 252, 252, 0.783);
+  border-bottom: rgba(63, 193, 193, 0.783);
   transform: scale(1.2);
   margin-left: 8px;
   margin-right: 6px;
@@ -41,9 +42,9 @@
   margin-top: 50px;
   margin-bottom: 20px;
   border-style: ridge;
-  border: 2px solid rgba(51, 51, 51, 0.21) c5c; /* Example border color */
   border-top: rgba(182, 184, 184);
-  background-color: rgba(182, 184, 184, 0.783); /* Example background color */
+  background-color: rgba(63, 193, 193, 0.783);
+  border-color: rgba(6, 252, 252, 0.783);
   padding: 10px; /* Example padding */
 }
 
@@ -65,7 +66,6 @@
   margin-bottom: 15px;
   border-radius: 5px;
   width: 100%;
-  color: white;
   font-family: "Start2P";
   font-size: 13px;
   /* color: black; */
