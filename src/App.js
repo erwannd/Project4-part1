@@ -207,7 +207,6 @@ export default function App() {
                 score={score}
                 onExit={handleExitSubmission}
               />
-              <button>Play again</button>
             </div>
           )}
         </div>

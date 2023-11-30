@@ -53,12 +53,3 @@ export default function ScoreSubmission({ player, score, onExit }) {
     </div>
   );
 }
-
-// This is what the post-body-json should look like:
-// {
-//   "player": {
-//       "userId": "special-one",
-//       "name": "Jose"
-//   },
-//   "score": 1900
-// }
