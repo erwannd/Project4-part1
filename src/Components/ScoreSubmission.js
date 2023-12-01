@@ -8,7 +8,6 @@ import yesBtnFocus from "../static/images/yes-btn-focus.png";
 
 export default function ScoreSubmission({ player, username, score, onExit }) {
   const [playerName, setPlayerName] = useState(username);
-  const [submit, setSubmit] = useState(false);
 
   async function handleSubmission(event) {
     event.preventDefault();
