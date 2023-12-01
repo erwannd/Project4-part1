@@ -152,11 +152,13 @@ export default function App() {
                     src={startBtn}
                     onClick={handleStart}
                     className="start-btn"
+                    draggable={false}
                   ></img>
                   <img
                     src={scoreBtn}
                     onClick={handleView}
                     className="score-btn"
+                    draggable={false}
                   ></img>
                 </div>
               )}
@@ -213,6 +215,7 @@ export default function App() {
                     onClick={handleBackToMainMenu}
                     onMouseOver={(e) => (e.target.src = backBtnFocus)}
                     onMouseOut={(e) => (e.target.src = backBtn)}
+                    draggable={false}
                   ></img>
                 </div>
               )}

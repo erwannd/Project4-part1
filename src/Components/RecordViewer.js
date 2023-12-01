@@ -174,6 +174,7 @@ export default function RecordViewer({ playerId, closeViewer }) {
         onClick={closeViewer}
         onMouseOver={(e) => (e.target.src = backBtnFocus)}
         onMouseOut={(e) => (e.target.src = backBtn)}
+        draggable={false}
       ></img>
     </div>
   );

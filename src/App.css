@@ -18,6 +18,10 @@
   src: url("./static/fonts/PressStart2P-vaV7.ttf");
 }
 
+.App {
+  user-select: none;
+}
+
 .menu-options img {
   padding: 10px 20px;
   height: 60px;

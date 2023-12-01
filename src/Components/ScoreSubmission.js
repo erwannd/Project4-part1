@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "../static/scoreSubmission.css";
 import noBtn from "../static/images/no-btn.png";
@@ -8,9 +8,8 @@ import yesBtnFocus from "../static/images/yes-btn-focus.png";
 
 export default function ScoreSubmission({ player, username, score, onExit }) {
   const [playerName, setPlayerName] = useState(username);
+  const [submit, setSubmit] = useState(false);
 
-  // function to handle the user submit of a new book
-  // async used so we can use the "await", which causes a block until post is done
   async function handleSubmission(event) {
     event.preventDefault();
 
@@ -21,8 +20,6 @@ export default function ScoreSubmission({ player, username, score, onExit }) {
       },
       name: playerName,
     };
-
-    console.log(`Submitted your score: ${score}`);
 
     try {
       const response = await axios.post(
@@ -36,17 +33,16 @@ export default function ScoreSubmission({ player, username, score, onExit }) {
     onExit();
   }
 
-  function handleNoSubmission(event) {
+  function cancelSubmit(event) {
     event.preventDefault();
-    console.log(`Do not submit score`);
     onExit();
   }
 
   return (
     <div className="record-submission">
-      <form>
+      <div>
         <p>Add your score to the leaderboard?</p>
-        <div className="confirm-submission">
+        <div className="submission-confirmation">
           <img
             src={yesBtn}
             onClick={handleSubmission}
@@ -56,18 +52,23 @@ export default function ScoreSubmission({ player, username, score, onExit }) {
           ></img>
           <img
             src={noBtn}
-            onClick={handleNoSubmission}
+            onClick={cancelSubmit}
             className="confirm-btn"
             onMouseOver={(e) => (e.target.src = noBtnFocus)}
             onMouseOut={(e) => (e.target.src = noBtn)}
           ></img>
         </div>
-        <input
-          type="text"
-          value={playerName}
-          onChange={(e) => setPlayerName(e.target.value)}
-        ></input>
-      </form>
+        <div className="submit-modal">
+          <form>
+            <label className="input-label">Enter your name</label>
+            <input
+              type="text"
+              value={playerName}
+              onChange={(e) => setPlayerName(e.target.value)}
+            ></input>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

@@ -10,6 +10,7 @@ export default function Heart({ remainingLife }) {
       className="heart-icon"
       src={index < remainingLife ? filledHeart : emptyHeart}
       alt={index < remainingLife ? "filled heart" : "empty heart"}
+      draggable={false}
     />
   ));
 
