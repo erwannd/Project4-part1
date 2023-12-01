@@ -25,9 +25,17 @@
   font-size: 20px;
 }
 
+.welcome-banner-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .close-btn {
-  margin-top: 10px;
+  margin-top: 20px;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
 }
