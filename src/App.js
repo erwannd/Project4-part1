@@ -85,18 +85,20 @@ export default function App() {
   // this will be called by the LoginForm
   function handleLogin(user) {
     setUser(user);
-    axios
-      .get(
-        `https://wheelofortune.wl.r.appspot.com/findNameById?googleId=${user.uid}`
-      )
-      .then((response) => {
-        if (response.data !== null) {
-          setPlayerName(response.data[0].name);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (user !== null) {
+      axios
+        .get(
+          `https://wheelofortune.wl.r.appspot.com/findNameById?googleId=${user.uid}`
+        )
+        .then((response) => {
+          if (response.data !== null) {
+            setPlayerName(response.data[0].name);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 
   // Function to handle guess submission
