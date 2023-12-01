@@ -20,6 +20,8 @@
 
 .App {
   user-select: none;
+  align-items: center;
+  text-align: center;
 }
 
 .menu-options img {
